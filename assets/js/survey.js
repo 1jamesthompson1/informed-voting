@@ -1,4 +1,4 @@
-import { PARTIES, SECTIONS, META } from "./survey-data.js";
+import { PARTIES, SECTIONS, META } from "./survey-data.js?v=20261104";
 import {
   LIKERT_LABELS,
   answeredCount,
@@ -8,7 +8,7 @@ import {
   loadAnswers,
   saveAnswers,
   scrollToId,
-} from "./utils.js";
+} from "./utils.js?v=20261104";
 
 const answers = loadAnswers();
 const sectionsRoot = document.getElementById("survey-sections");

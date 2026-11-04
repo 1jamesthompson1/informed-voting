@@ -1,11 +1,11 @@
-import { PARTIES, SECTIONS, META } from "./survey-data.js";
+import { PARTIES, SECTIONS, META } from "./survey-data.js?v=20261104";
 import {
   STANCE_LABELS,
   STANCE_SHORT,
   downloadFile,
   escapeHtml,
   partyById,
-} from "./utils.js";
+} from "./utils.js?v=20261104";
 
 const root = document.getElementById("audit-root");
 const controls = document.getElementById("audit-controls");

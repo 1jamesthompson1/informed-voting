@@ -1,4 +1,4 @@
-import { PARTIES, SECTIONS, META } from "./survey-data.js";
+import { PARTIES, SECTIONS, META } from "./survey-data.js?v=20261104";
 import {
   LIKERT_LABELS,
   STANCE_LABELS,
@@ -16,7 +16,7 @@ import {
   shareLink,
   topAgreements,
   topDifferences,
-} from "./utils.js";
+} from "./utils.js?v=20261104";
 
 const root = document.getElementById("results-root");
 const params = new URLSearchParams(window.location.search);
