@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Methods and scoring — Clear Vote</title>
+  <meta name="description" content="How Clear Vote chose its 11 policy areas, wrote 44 neutral statements, coded every party position, and calculated your alignment.">
+  <meta name="theme-color" content="#f6f2e9">
+  <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body data-page="methods">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./index.html">
+        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <rect x="3" y="3" width="58" height="58" rx="16" fill="none" stroke="currentColor" stroke-width="3"/>
+          <path d="M17 33.5 27 43l20-23" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="49" cy="15" r="4.5" fill="#c98a1c"/>
+        </svg>
+        <span class="brand-text">
+          <strong>Clear Vote</strong>
+          <span>Aotearoa New Zealand · 2026</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <span aria-hidden="true">☰</span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="./index.html#survey">Take the survey</a>
+        <a href="./methods.html" aria-current="page">Methods</a>
+        <a href="./motivation.html">Why this exists</a>
+        <a href="./audit.html">Audit the sources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="eyebrow">Methods</p>
+        <h1>How this works — and how to check it.</h1>
+        <p class="lede">Clear Vote is a static, independent project. It has no server, no database and no party affiliation. This page explains every choice that turns a published policy position into a percentage — and where the limits are.</p>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="narrow">
+        <div class="toc">
+          <strong>On this page</strong>
+          <ol>
+            <li><a href="#what">What this is</a></li>
+            <li><a href="#areas">How the areas were chosen</a></li>
+            <li><a href="#statements">How the statements were written</a></li>
+            <li><a href="#coding">How party positions were coded</a></li>
+            <li><a href="#scoring">How alignment is scored</a></li>
+            <li><a href="#blinding">Why the survey is blind</a></li>
+            <li><a href="#mmp">MMP and what your vote does</a></li>
+            <li><a href="#limits">Limitations</a></li>
+            <li><a href="#sources">Sources and corrections</a></li>
+            <li><a href="#accessibility">Accessibility and plain language</a></li>
+            <li><a href="#changelog">Changelog</a></li>
+          </ol>
+        </div>
+
+        <div class="prose">
+          <h2 id="what">1. What this is</h2>
+          <p>Clear Vote is an independent, non-partisan education project for the <strong>2026 New Zealand general election</strong>, held on Saturday 7 November 2026. It compares the published policy positions of seven parties: <strong>National, Labour, the Greens, ACT, New Zealand First, Te Pāti Māori and The Opportunity Party (TOP)</strong>.</p>
+          <p>Those seven are included because they have parliamentary representation or a realistic path to Parliament in the published polling, and because they publish enough material to compare. Other parties are contesting the election, but adding them would make a 30-minute survey much longer and the evidence base is thinner. This is a judgement, not a claim that other parties do not matter.</p>
+          <p>The survey has <strong>11 policy areas</strong> and <strong>44 statements</strong>. It is designed to take about 30 minutes. Party names, logos, leaders and colours are hidden while you answer. After the survey, the results page shows your alignment with each party, the issues where you agree and differ, and a polling-based graphic showing how votes become seats. The <a href="./audit.html">audit page</a> shows every party position with its source.</p>
+          <p>Clear Vote does not tell you how to vote. It does not predict the election result. It is not affiliated with any party, candidate or campaign, and it does not accept donations or run advertising.</p>
+
+          <h2 id="areas">2. How the areas were chosen</h2>
+          <p>The 11 areas follow the main areas of government responsibility and the way parties organise their own 2026 policy. They also overlap with the topic structure used by independent guides such as Policy.nz and RNZ’s election policy guide. The aim was to cover the largest spending areas, the most contested choices, and the issues where parties publish distinct positions.</p>
+          <table>
+            <thead>
+              <tr><th>Area</th><th>What it covers</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Money, tax and the cost of living</td><td>Income tax, capital gains tax, wealth tax, minimum wage and grocery prices.</td></tr>
+              <tr><td>Housing</td><td>State housing, density, rent rules and first-home support.</td></tr>
+              <tr><td>Health</td><td>Free GP care, Pharmac, private provision and the health workforce.</td></tr>
+              <tr><td>Education</td><td>Charter schools, school lunches, tertiary fees and the history curriculum.</td></tr>
+              <tr><td>Crime and justice</td><td>Three Strikes, gang powers, rehabilitation and youth boot camps.</td></tr>
+              <tr><td>Climate and environment</td><td>Oil and gas, agricultural emissions, the net-zero target and electric vehicles.</td></tr>
+              <tr><td>Immigration and workforce</td><td>Work visas, refugee resettlement and pathways to residency.</td></tr>
+              <tr><td>Foreign policy and defence</td><td>Defence spending, AUKUS, Palestine and foreign aid.</td></tr>
+              <tr><td>Te Tiriti and democracy</td><td>Māori seats, a Treaty referendum, the voting age and donation caps.</td></tr>
+              <tr><td>Transport and infrastructure</td><td>Roads, public transport, intercity rail and infrastructure borrowing.</td></tr>
+              <tr><td>Welfare and inequality</td><td>Benefit levels, universal income, work obligations and the superannuation age.</td></tr>
+            </tbody>
+          </table>
+          <p>Some important issues are not included: local government, arts and culture, sport, disability policy, Pacific relations, rural affairs, digital policy and many others. A 44-statement survey cannot be a complete manifesto. The areas that are included were chosen because they are central to the 2026 campaign and because the parties have published enough to compare.</p>
+          <p>Four statements per area is a deliberate compromise. It is enough to capture the main axes of disagreement without turning the survey into an endurance test. The 30-minute estimate assumes about 40 seconds per statement, plus time to read the short context notes.</p>
+
+          <h2 id="statements">3. How the statements were written</h2>
+          <p>Each statement is a short, neutral proposition that a government could adopt. The rules were:</p>
+          <ul>
+            <li><strong>One idea per statement.</strong> No “double-barrelled” propositions that bundle a popular idea with a controversial one.</li>
+            <li><strong>Actionable.</strong> “The Government should…” rather than a vague value or a party slogan.</li>
+            <li><strong>Plain language.</strong> Short sentences, common words, and a “What this means” line that explains any jargon.</li>
+            <li><strong>Neutral framing.</strong> No party names, leaders, logos or colours. No loaded words like “common sense” or “extreme.” The context note sets out the trade-off, not the conclusion.</li>
+            <li><strong>Specific enough to differentiate.</strong> If every party agrees, the statement does not help you choose. The set aims for real choices, not consensus platitudes.</li>
+            <li><strong>Not a quote.</strong> The statements are our summaries of a policy area, not direct quotes from a party. The audit page links to the original material.</li>
+          </ul>
+          <p>The statements were reviewed for readability, double negatives and leading language. They are not perfect. If a statement is ambiguous, the audit page shows the evidence and the source so you can judge for yourself.</p>
+
+          <h2 id="coding">4. How party positions were coded</h2>
+          <p>Every party position was coded on the same five-point scale, with a separate category for “no clear position.” The rubric is:</p>
+          <table>
+            <thead>
+              <tr><th>Code</th><th>Meaning</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>+2</strong></td><td>Strongly supports: an explicit commitment, priority or manifesto policy.</td><td>A party that campaigns on introducing the policy.</td></tr>
+              <tr><td><strong>+1</strong></td><td>Supports the direction, but proposes a narrower, conditional or different design.</td><td>Supporting three free GP visits rather than unlimited free care.</td></tr>
+              <tr><td><strong>0</strong></td><td>Mixed or conditional: has elements of both sides, or proposes a different policy that partly achieves the goal.</td><td>Preferring a land value tax to a capital gains tax.</td></tr>
+              <tr><td><strong>−1</strong></td><td>Opposes the direction, or proposes a weaker alternative.</td><td>Opposing a specific tax while proposing a smaller alternative.</td></tr>
+              <tr><td><strong>−2</strong></td><td>Strongly opposes: explicit opposition, a campaign against it, or a vote against it.</td><td>A party that makes opposition a headline commitment.</td></tr>
+              <tr><td><strong>–</strong></td><td>No clear published position found in the 2026 material reviewed.</td><td>A minor party that has not published a policy on the issue.</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Evidence rules.</strong> Official party material comes first: 2026 manifestos, policy pages and official releases. Where the official material was not specific enough, we used established news or policy analysis and labelled it <em>secondary</em> on the audit page. We did not infer a position from a party’s general ideology, and we did not use social media rumours or partisan commentary. Every position has a short evidence note and a source link.</p>
+          <p><strong>The data pipeline.</strong> We used the <a href="https://policy.nz/2026" rel="noopener">Policy.nz 2026 policy database</a> as a starting index because it collects party policies with citations. Each citation was checked against the policy statement. Where the first citation did not match the policy, we linked to the party’s official policy index instead. The full dataset, including the policy basis for each coding, is available as <a href="./assets/data/positions.json">positions.json</a>.</p>
+          <p><strong>Coverage varies.</strong> At the time of writing, the number of coded positions was: National 40/44, Labour 44/44, Greens 44/44, ACT 39/44, NZ First 34/44, Te Pāti Māori 42/44 and TOP 36/44. A party with fewer published positions may have a less reliable score. The results page shows the number of statements behind each percentage. A dash is not a zero.</p>
+          <p><strong>Date.</strong> Positions were checked on <strong>4 November 2026</strong>, three days before the election. Policies can change during a campaign and after coalition negotiations. The source links are the authoritative record; this site is a snapshot.</p>
+
+          <h2 id="scoring">5. How alignment is scored</h2>
+          <p>Your answers and the party positions use the same five-point scale: <strong>−2</strong> strongly disagree, <strong>−1</strong> disagree, <strong>0</strong> unsure/neutral, <strong>+1</strong> agree, <strong>+2</strong> strongly agree. “Skip” is treated as no answer and is excluded from the calculation.</p>
+          <p>For each statement where both you and the party have a position, the match is:</p>
+          <span class="formula">match = 1 − |your answer − party position| ÷ 4</span>
+          <p>This gives a score from 0 (opposite ends of the scale) to 1 (identical). A party’s overall alignment is the average of those matches across the statements where both of you have a position, multiplied by 100.</p>
+          <p><strong>Worked example.</strong> You strongly agree (+2) and the party supports (+1): the difference is 1, so the match is 1 − 1/4 = 0.75, or 75%. You are neutral (0) and the party strongly supports (+2): the difference is 2, so the match is 1 − 2/4 = 0.5, or 50%. You strongly disagree (−2) and the party strongly agrees (+2): the difference is 4, so the match is 0.</p>
+          <p><strong>Coverage.</strong> The results page shows how many statements each score is based on. A party needs at least eight matched statements to receive a score. If it has fewer, it is shown as “not enough positions” rather than given a misleading number. Coverage is the number of matched statements divided by the number of statements you answered.</p>
+          <p><strong>Equal weights.</strong> Every statement counts equally. This is a deliberate choice: it is simple, transparent, and avoids imposing a hidden judgement that one issue matters more than another. The limitation is that you may care much more about, say, climate than about transport. The “issue by issue” heatmap lets you see where a score comes from, and you can weight the issues yourself when you read it.</p>
+          <p><strong>What a percentage means.</strong> 50% does not mean “half right.” It means the average distance between your answers and the party’s positions is halfway between identical and opposite. A 60% match is not a pass mark; it is a relative measure. The ranking matters more than the absolute number, and the issues behind the ranking matter more than both.</p>
+          <p><strong>Bloc scores.</strong> The results page also shows how closely your answers match the left bloc (Labour, Greens, Te Pāti Māori) and the right bloc (National, ACT, NZ First). The bloc score is a seat-weighted average of the party scores, using the 2 November polling snapshot. Larger parties count for more because they are likely to have more influence in a coalition. TOP is excluded because it is unaligned. This is a rough guide to the government you might prefer, not a prediction of the next coalition.</p>
+          <p><strong>Three lenses, not three instructions.</strong> The results page presents three ways to think about a vote: the party closest to you, the bloc closer to you, and a possible kingmaker. They can point in different directions. That is the point: a vote is not only an expression of policy preferences; it also helps decide who governs. The page gives you the numbers and the trade-offs, not a recommendation.</p>
+
+          <h2 id="blinding">6. Why the survey is blind</h2>
+          <p>During the survey, the page does not show party names, logos, leaders, colours or slogans. Each statement is a common proposition assessed across all parties, rather than “this is Party X’s policy.” That is stronger than hiding a label on a party-specific statement: you are reacting to the policy, not to the brand.</p>
+          <p>The premise is simple. If you see the party name first, it is hard not to react to the brand, the leader, or a past government. Hiding the name does not remove bias, but it changes the order of judgement: policy first, party second. The audit page is deliberately non-blind, so you can check the coding and see the names whenever you want.</p>
+          <p>Blinding is at the interface level, not a security feature. The underlying data is public on the audit page, and a determined person could search the text of a statement. The goal is to reduce unconscious bias for a typical user, not to make it impossible to find the answer.</p>
+
+          <h2 id="mmp">7. MMP and what your vote does</h2>
+          <p>New Zealand uses mixed-member proportional representation (MMP). You have two votes:</p>
+          <ul>
+            <li><strong>Your party vote</strong> decides the share of seats each party gets in Parliament. This is the vote that usually decides who governs.</li>
+            <li><strong>Your electorate vote</strong> decides the local MP in your electorate.</li>
+          </ul>
+          <p>A party enters Parliament if it wins at least <strong>5% of the party vote</strong> or wins an <strong>electorate seat</strong>. Seats are allocated using the Sainte-Laguë formula. If a party wins more electorate seats than its party vote entitles it to, Parliament can grow — an “overhang.” The 2 November polling snapshot used on this site projects 123 seats, with 62 needed to govern.</p>
+          <p><strong>Why a small party can matter.</strong> A vote for a party below the threshold may not produce seats unless it wins an electorate. But a vote for a small party that is above the threshold, or that wins an electorate, can add seats to a bloc and change who has the numbers to govern. A small party can also become a coalition partner or hold the balance of power. That is why “vote for the party closest to you” and “vote for the side you prefer to govern” can point in different directions.</p>
+          <p><strong>Why the polling graphic is not a prediction.</strong> Polls have margins of error, and coalition negotiations are unpredictable. The 2 November average is a snapshot, not a forecast. The results page labels it clearly. The point is to show the mechanics and the current numbers, not to tell you what will happen.</p>
+
+          <h2 id="limits">8. Limitations</h2>
+          <ul>
+            <li><strong>Manifestos are not binding.</strong> Parties compromise in coalition, and individual MPs can vote differently on conscience issues.</li>
+            <li><strong>Some positions are from announcements, not manifestos.</strong> The evidence note says what the source is. A policy announced in October may not appear in the manifesto.</li>
+            <li><strong>Coverage varies.</strong> A party with fewer published positions may have a less reliable score. The results page shows the number of statements behind each percentage.</li>
+            <li><strong>Equal weighting is a choice.</strong> You may care more about some issues. The heatmap lets you see where the score comes from.</li>
+            <li><strong>44 statements are not the whole election.</strong> Important issues are missing, and some statements simplify complex trade-offs.</li>
+            <li><strong>Secondary sources can contain errors.</strong> They are labelled, and the official source is preferred. If you find a mistake, please flag it.</li>
+            <li><strong>The polling snapshot is dated.</strong> The election result may differ. The seat graphic is an illustration of MMP, not a forecast.</li>
+            <li><strong>Policy alignment is not the same as fitness to govern.</strong> The survey does not measure competence, honesty, character, trust or the quality of a party’s team.</li>
+            <li><strong>Strategic voting is personal.</strong> The three lenses on the results page are ways to think about the choice, not instructions.</li>
+          </ul>
+
+          <h2 id="sources">9. Sources and corrections</h2>
+          <p>Every non-null position on the audit page has a source link and a source type:</p>
+          <ul>
+            <li><strong>Official:</strong> the party’s own 2026 manifesto, policy page or release. This is the preferred source.</li>
+            <li><strong>Secondary:</strong> established news or policy analysis used where the official material was not specific enough. These are clearly labelled and should be checked against the official material.</li>
+            <li><strong>No clear position:</strong> we could not find a published 2026 commitment in the material reviewed. This is not a claim that the party has no view.</li>
+          </ul>
+          <p>Key sources include the parties’ 2026 manifestos and policy pages, the <a href="https://policy.nz/2026" rel="noopener">Policy.nz 2026 policy database</a>, <a href="https://www.rnz.co.nz/news/politics_election-2026/feature/rnz-election-policy-guide-2026" rel="noopener">RNZ’s Election Policy Guide 2026</a>, <a href="https://thespinoff.co.nz/" rel="noopener">The Spinoff</a>, <a href="https://newsroom.co.nz/" rel="noopener">Newsroom</a>, <a href="https://whichparty.nz/" rel="noopener">WhichParty NZ</a>, <a href="https://election2026.nz/" rel="noopener">Election 2026</a>, Stats NZ, the Treasury, MFAT and the Electoral Commission. The full list is on the <a href="./audit.html">audit page</a>.</p>
+          <p id="corrections"><strong>Corrections.</strong> Policy coding is a human judgement. If a source is wrong, out of date, or missing important context, please open an issue on the project’s GitHub repository with the statement ID, the party and the source you believe is correct. Corrections will be logged below. This project is not affiliated with any party.</p>
+          <p><strong>Privacy.</strong> Clear Vote has no server, account or database. Answers are saved in your browser’s local storage. A shared result link contains your answers but no name, email or location. Social platforms may add their own tracking when you use a share button; the site itself does not track you.</p>
+
+          <h2 id="accessibility">10. Accessibility and plain language</h2>
+          <p>The site is designed to be usable by as many people as possible:</p>
+          <ul>
+            <li><strong>Mobile first.</strong> Large touch targets, a single-column layout, and a sticky progress bar.</li>
+            <li><strong>Screen readers.</strong> Semantic headings, fieldsets and labels for every question, a progress bar with an accessible value, and status messages for saved answers.</li>
+            <li><strong>Not colour alone.</strong> Stances are labelled with words and numbers, not just colours. The heatmap includes percentages and a legend.</li>
+            <li><strong>Print.</strong> The results page has a print stylesheet so you can take a clean copy to a voting place or a conversation.</li>
+            <li><strong>Plain language.</strong> Short sentences, common words, and a “What this means” line for each statement. Technical terms such as MMP, Sainte-Laguë and overhang are explained.</li>
+            <li><strong>Te reo Māori.</strong> Party names and Māori terms use macrons and are explained in English where needed.</li>
+            <li><strong>Reduced motion and dark mode.</strong> The site respects your system settings for reduced motion and colour scheme.</li>
+          </ul>
+          <p>If you need another format or find an accessibility barrier, please open an issue. Accessibility is not a one-off checklist; it is an ongoing process.</p>
+
+          <h2 id="changelog">11. Changelog</h2>
+          <p><strong>4 November 2026 — initial release.</strong> 11 areas, 44 statements, seven parties. Sources checked against official 2026 material. Polling snapshot: 2 November 2026 average from <a href="https://election2026.nz/" rel="noopener">election2026.nz</a>. Data version <span class="mono">2026-11-04.1</span>.</p>
+          <p><strong>Corrections log.</strong> No corrections logged yet. When a correction is made, the statement ID, party, old coding, new coding and source will be recorded here.</p>
+          <p class="small muted">This page is explanatory, not legal advice. It does not promote or oppose any party or candidate.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="./index.html">
+            <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+              <rect x="3" y="3" width="58" height="58" rx="16" fill="none" stroke="currentColor" stroke-width="3"/>
+              <path d="M17 33.5 27 43l20-23" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="49" cy="15" r="4.5" fill="#c98a1c"/>
+            </svg>
+            <span class="brand-text">
+              <strong>Clear Vote</strong>
+              <span>Aotearoa New Zealand · 2026</span>
+            </span>
+          </a>
+          <p class="small muted mt-2">Compare policies, not personalities. Built for the 2026 general election and released as an open, auditable project.</p>
+        </div>
+        <div>
+          <h3>The project</h3>
+          <ul>
+            <li><a href="./methods.html">Methods &amp; scoring</a></li>
+            <li><a href="./motivation.html">Why this exists</a></li>
+            <li><a href="./audit.html">Audit the sources</a></li>
+            <li><a href="./results.html">Your results</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Before you vote</h3>
+          <ul>
+            <li><a href="https://vote.nz/2026-general-election/voting-in-the-election/what-to-do" rel="noopener">How to vote</a></li>
+            <li><a href="https://vote.nz/2026-general-election/about/overview/key-dates" rel="noopener">Key dates</a></li>
+            <li><a href="https://elections.nz/" rel="noopener">Electoral Commission</a></li>
+            <li><a href="https://election2026.nz/" rel="noopener">Election 2026 polling</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-note">
+        <p>Clear Vote is an independent project. It does not promote or oppose any party or candidate, and it is not authorised by any party or campaign. Policy positions are summarised from official party material and linked on the audit page. Polling data is a snapshot from <a href="https://election2026.nz/" rel="noopener">election2026.nz</a> (2 November 2026 average). If you find an error, please open an issue on GitHub — corrections are welcome.</p>
+        <p>Last updated: 4 November 2026 · <a href="./methods.html#corrections">Corrections policy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/common.js" defer></script>
+</body>
+</html>
