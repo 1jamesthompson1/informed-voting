@@ -49,7 +49,7 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-Do not open `index.html` directly with `file://` — ES modules and `fetch`-free imports work, but some browsers block module loading from local files. Use a server.
+Do not open `index.html` directly with `file://` — some browsers block ES modules from local files. Use a local server.
 
 ## How the data works
 
