@@ -2601,3 +2601,67 @@ hr {
     font-size: 0.64rem;
   }
 }
+
+/* ---------- Vote path ---------- */
+
+.vote-path {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  gap: 0.6rem;
+  align-items: stretch;
+  margin-bottom: 1rem;
+}
+
+.vote-step {
+  padding: 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.vote-step strong {
+  display: block;
+  font-size: 0.86rem;
+  line-height: 1.25;
+  margin-bottom: 0.25rem;
+}
+
+.vote-step p {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.vote-num {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+.vote-arrow {
+  align-self: center;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 860px) {
+  .vote-path {
+    grid-template-columns: 1fr;
+  }
+
+  .vote-arrow {
+    transform: rotate(90deg);
+    justify-self: center;
+    line-height: 1;
+  }
+}

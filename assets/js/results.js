@@ -393,6 +393,16 @@ function renderVoteImpact(results) {
           <p>New Zealand uses mixed-member proportional representation (MMP). Your party vote decides the share of seats each party gets; your electorate vote decides the local MP. The graphic below is the 2 November 2026 polling average, not a prediction.</p>
         </div>
 
+        <div class="vote-path" aria-label="How a party vote becomes seats">
+          <div class="vote-step"><span class="vote-num">1</span><strong>Your party vote</strong><p>Adds to your party’s total.</p></div>
+          <div class="vote-arrow" aria-hidden="true">→</div>
+          <div class="vote-step"><span class="vote-num">2</span><strong>5% or an electorate</strong><p>The party must clear the threshold or win a seat.</p></div>
+          <div class="vote-arrow" aria-hidden="true">→</div>
+          <div class="vote-step"><span class="vote-num">3</span><strong>Sainte-Laguë</strong><p>Seats are shared out in proportion to the party vote.</p></div>
+          <div class="vote-arrow" aria-hidden="true">→</div>
+          <div class="vote-step"><span class="vote-num">4</span><strong>Government</strong><p>Parties negotiate a majority — 62 seats in this snapshot.</p></div>
+        </div>
+
         <div class="card card-pad">
           <div class="seat-grid" role="img" aria-label="Polling snapshot: ${seatOrder.map((id) => `${partyName(id)} ${polling.seats[id]} seats`).join(", ")}. Total ${polling.totalSeats} seats. Majority ${polling.majority}.">
             ${seatDots}
