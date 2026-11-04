@@ -4,7 +4,7 @@
 
 The site is a long, blinded survey across 11 areas of government. You answer 44 statements in about 30 minutes, then see which parties match you, where you differ, and how your vote translates into seats under MMP. Every party position is linked to a source on the audit page.
 
-- **Live site:** [1jamesthompson1.github.io/informed-voting](https://1jamesthompson1.github.io/informed-voting/)
+- **Live site:** [james.sjhl.nz/informed-voting](https://james.sjhl.nz/informed-voting/)
 - **Election:** Saturday 7 November 2026
 - **Data snapshot:** 4 November 2026
 - **Parties:** National, Labour, Greens, ACT, New Zealand First, Te Pāti Māori, The Opportunity Party (TOP)
@@ -96,7 +96,7 @@ The repo is designed to deploy from the root of the `main` branch:
 3. Branch: `main`, folder: `/ (root)`.
 4. The `.nojekyll` file prevents Jekyll from processing the assets.
 
-All paths are relative, so the site works at a project URL such as `https://username.github.io/informed-voting/` as well as at a custom domain.
+All paths are relative, so the site works at a project URL such as `https://james.sjhl.nz/informed-voting/`.
 
 ## Sources and corrections
 
