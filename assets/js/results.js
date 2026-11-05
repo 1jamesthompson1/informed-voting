@@ -510,7 +510,7 @@ function renderVoteImpact(results) {
             ? "Te Pāti Māori is polling below 5% but wins Māori electorate seats, which keeps it in Parliament. Its party vote still matters for its share of list seats."
             : "It is above the 5% threshold in this snapshot, so a party vote for it contributes to its share of the 123 seats."
       }`
-    : "";
+    : "Answer more statements or set at least one issue to Normal or High to see a closest party.";
 
   const blocScenario = left.percentage !== null && right.percentage !== null
     ? `${tension ? `${tension} ` : ""}Your answers are closer to the <strong>${leftLeads ? "left" : "right"} bloc</strong> (${Math.round(leftLeads ? left.percentage : right.percentage)}%) than the <strong>${leftLeads ? "right" : "left"} bloc</strong> (${Math.round(leftLeads ? right.percentage : left.percentage)}%). The best match in that bloc is <strong>${escapeHtml((leftLeads ? left.best : right.best)?.party.name || "–")}</strong>. If you care most about which side governs, a vote for a party in that bloc may do more to change the government than a vote for a party outside it.`
