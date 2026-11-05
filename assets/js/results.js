@@ -372,7 +372,7 @@ function renderIssueProfile(results) {
         <div class="section-head">
           <p class="eyebrow">Your issue profile</p>
           <h2>Where you align — and where you don’t.</h2>
-          <p>This is your raw match with <strong>${escapeHtml(top.party.name)}</strong> in each area, sorted from strongest to weakest. The badge on the right is the importance you gave that area; it changes the overall ranking, not the bar itself.</p>
+          <p>This is your raw match with <strong>${escapeHtml(top.party.name)}</strong> in each area where the party has a published position, sorted from strongest to weakest. The badge on the right is the importance you gave that area; it changes the overall ranking, not the bar itself.</p>
         </div>
         <div class="card card-pad">
           <div class="issue-profile">${bars}</div>
