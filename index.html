@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Clear Vote — Compare policies, not personalities | NZ 2026</title>
-  <meta name="description" content="A blind, source-checked comparison of the 2026 New Zealand election policies. Answer 44 questions in about 30 minutes, then see which parties match you — and why.">
+  <meta name="description" content="A blind, source-checked comparison of the 2026 New Zealand election policies. Answer 48 questions in about 35 minutes, then see which parties match you — and why.">
   <meta name="theme-color" content="#f6f2e9">
   <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./assets/css/styles.css?v=20261104">
+  <link rel="stylesheet" href="./assets/css/styles.css?v=20261105">
   <meta property="og:title" content="Clear Vote — Compare policies, not personalities">
-  <meta property="og:description" content="A blind, source-checked comparison of the 2026 New Zealand election policies. 44 questions. About 30 minutes. Every party position sourced.">
+  <meta property="og:description" content="A blind, source-checked comparison of the 2026 New Zealand election policies. 48 questions. About 35 minutes. Every party position sourced.">
   <meta property="og:type" content="website">
 </head>
 <body data-page="survey">
@@ -36,6 +36,7 @@
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
         <a href="#survey" aria-current="page">Take the survey</a>
+        <a href="./bills.html">Bills</a>
         <a href="./methods.html">Methods</a>
         <a href="./motivation.html">Why this exists</a>
         <a href="./audit.html">Audit the sources</a>
@@ -50,14 +51,14 @@
           <div>
             <p class="eyebrow">2026 General Election · Saturday 7 November</p>
             <h1>Your vote is too important to <em>guess</em>.</h1>
-            <p class="lede">Compare what the parties actually propose — without seeing their names. Answer 44 policy questions, then see who matches you, where you differ, and how your vote could shape the next government.</p>
+            <p class="lede">Compare what the parties actually propose — without seeing their names. Answer 48 policy questions, then see who matches you, where you differ, and how your vote could shape the next government.</p>
             <div class="btn-row mt-3">
               <a class="btn" href="#survey">Start the survey <span aria-hidden="true">→</span></a>
               <a class="btn btn-ghost" href="./methods.html">How it works</a>
             </div>
             <div class="hero-meta">
-              <span>◷ About 30 minutes</span>
-              <span>◉ 11 policy areas</span>
+              <span>◷ About 35 minutes</span>
+              <span>◉ 12 policy areas</span>
               <span>⌂ No account, no tracking</span>
             </div>
           </div>
@@ -84,9 +85,9 @@
         </div>
 
         <div class="home-stats" aria-label="At a glance">
-          <div class="home-stat"><strong>44</strong><span>policy questions</span></div>
+          <div class="home-stat"><strong>48</strong><span>policy questions</span></div>
           <div class="home-stat"><strong>7</strong><span>parties compared</span></div>
-          <div class="home-stat"><strong>11</strong><span>areas of government</span></div>
+          <div class="home-stat"><strong>12</strong><span>areas of government</span></div>
           <div class="home-stat"><strong>100%</strong><span>positions linked to sources</span></div>
         </div>
       </div>
@@ -133,6 +134,7 @@
           <a class="category-pill" href="#section-tiriti"><span class="dot"></span>Te Tiriti &amp; democracy</a>
           <a class="category-pill" href="#section-transport"><span class="dot"></span>Transport &amp; infrastructure</a>
           <a class="category-pill" href="#section-welfare"><span class="dot"></span>Welfare &amp; inequality</a>
+          <a class="category-pill" href="#section-ai"><span class="dot"></span>AI &amp; technology</a>
         </div>
       </div>
     </section>
@@ -149,7 +151,7 @@
           <span aria-hidden="true">◉</span>
           <div>
             <strong>Why the party names are hidden</strong>
-            <p>Research on voting and decision-making shows that party labels can change how people judge the same policy. Hiding the names reduces that pull. The names, positions and sources are all revealed after you finish — and on the <a href="./audit.html">audit page</a> at any time.</p>
+            <p>Research on voting and decision-making shows that party labels can change how people judge the same policy. Hiding the names reduces that pull. The names, positions and sources are all revealed after you finish — and on the <a href="./audit.html">audit page</a> at any time. If a term is unfamiliar, the <a href="./glossary.html">glossary</a> has short explanations.</p>
           </div>
         </div>
 
@@ -163,8 +165,8 @@
           <div class="survey-main">
             <div class="survey-progress" id="survey-progress">
               <div class="progress-row">
-                <span class="progress-text" id="progress-text">0 of 44 answered</span>
-                <div class="progress-track" role="progressbar" aria-labelledby="progress-text" aria-valuemin="0" aria-valuemax="44" aria-valuenow="0" id="progress-track">
+                <span class="progress-text" id="progress-text">0 of 48 answered</span>
+                <div class="progress-track" role="progressbar" aria-labelledby="progress-text" aria-valuemin="0" aria-valuemax="48" aria-valuenow="0" id="progress-track">
                   <div class="progress-fill" id="progress-fill"></div>
                 </div>
                 <div class="progress-actions">
@@ -192,8 +194,11 @@
 
             <div class="survey-footer" id="survey-footer">
               <p id="footer-message"><strong>You can finish at any point.</strong> The results page will show how many statements each match is based on, so you can see whether a result is well supported.</p>
+              <p class="small muted" id="import-survey-status" role="status" aria-live="polite"></p>
               <div class="btn-row">
                 <a class="btn" href="./results.html" id="finish-link">See my results <span aria-hidden="true">→</span></a>
+                <label class="btn btn-ghost" for="import-survey">Load saved result</label>
+                <input id="import-survey" class="sr-only" type="file" accept="application/json,.json">
                 <button class="btn btn-ghost" type="button" id="restart-survey">Start over</button>
               </div>
             </div>
@@ -222,9 +227,42 @@
           </article>
           <article class="feature-card">
             <span class="num">C</span>
-            <h3>Share or print</h3>
-            <p>Print a clean results sheet, copy a private link, or download a result card for social media.</p>
+            <h3>Share, print or save</h3>
+            <p>Print a clean results sheet, copy a private link, download a result card, or save a results file you can load again later.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">What's in front of Parliament</p>
+          <h2>The election is not the only thing happening.</h2>
+          <p>Bills are where policy becomes law. These are three of the current or recent bills that matter for the election — with a plain-language explainer and a link to the official text.</p>
+        </div>
+        <div class="grid-3">
+          <article class="feature-card">
+            <span class="num">01</span>
+            <h3>Treaty references</h3>
+            <p>The Standardisation Bill would rewrite Treaty references across a range of Acts. It is the current Treaty bill after the Treaty Principles Bill was defeated.</p>
+            <p class="mt-2 mb-0"><a href="./bills.html#treaty-standardisation">Read the explainer →</a></p>
+          </article>
+          <article class="feature-card">
+            <span class="num">02</span>
+            <h3>Māori electorate boundaries</h3>
+            <p>The Electoral (District Boundaries) Bill would keep the number of Māori seats at seven until at least 2032, despite growth on the Māori roll.</p>
+            <p class="mt-2 mb-0"><a href="./bills.html#electoral-boundaries">Read the explainer →</a></p>
+          </article>
+          <article class="feature-card">
+            <span class="num">03</span>
+            <h3>Deepfakes</h3>
+            <p>The Deepfake Digital Harm and Exploitation Bill targets sexually explicit AI-generated images. It is one of the few AI-specific bills before Parliament.</p>
+            <p class="mt-2 mb-0"><a href="./bills.html#deepfake-bill">Read the explainer →</a></p>
+          </article>
+        </div>
+        <div class="btn-row mt-3">
+          <a class="btn btn-ghost" href="./bills.html">See all current bills &amp; flashpoints</a>
         </div>
       </div>
     </section>
@@ -235,7 +273,7 @@
           <span aria-hidden="true">✓</span>
           <div>
             <strong>What this is — and isn't</strong>
-            <p>This is an independent, non-partisan education project. It is not affiliated with any party, candidate, or campaign. It does not promote or oppose any party, collect personal information, run ads, or accept donations. It is a snapshot of published policy as at 4 November 2026, not a prediction of the election result. Always check the sources before you vote.</p>
+            <p>This is an independent, non-partisan education project. It is not affiliated with any party, candidate, or campaign. It does not promote or oppose any party, collect personal information, run ads, or accept donations. It is a snapshot of published policy as at 5 November 2026, not a prediction of the election result. Always check the sources before you vote.</p>
           </div>
         </div>
       </div>
@@ -265,6 +303,8 @@
             <li><a href="./methods.html">Methods &amp; scoring</a></li>
             <li><a href="./motivation.html">Why this exists</a></li>
             <li><a href="./audit.html">Audit the sources</a></li>
+            <li><a href="./bills.html">Current bills</a></li>
+            <li><a href="./glossary.html">Glossary</a></li>
             <li><a href="./results.html">Your results</a></li>
             <li><a href="https://github.com/1jamesthompson1/informed-voting" rel="noopener">GitHub repository</a></li>
           </ul>
@@ -281,12 +321,12 @@
       </div>
       <div class="footer-note">
         <p>Clear Vote is an independent project. It does not promote or oppose any party or candidate, and it is not authorised by any party or campaign. Policy positions are summarised from official party material and linked on the audit page. Polling data is a snapshot from <a href="https://election2026.nz/" rel="noopener">election2026.nz</a> (2 November 2026 average). If you find an error, please <a href="https://github.com/1jamesthompson1/informed-voting/issues/new?template=correction.md" rel="noopener">open an issue on GitHub</a> — corrections are welcome.</p>
-        <p>Last updated: 4 November 2026 · <a href="./methods.html#corrections">Corrections policy</a></p>
+        <p>Last updated: 5 November 2026 · <a href="./methods.html#corrections">Corrections policy</a></p>
       </div>
     </div>
   </footer>
 
-  <script src="./assets/js/common.js?v=20261104" defer></script>
-  <script type="module" src="./assets/js/survey.js?v=20261104"></script>
+  <script src="./assets/js/common.js?v=20261105" defer></script>
+  <script type="module" src="./assets/js/survey.js?v=20261105"></script>
 </body>
 </html>

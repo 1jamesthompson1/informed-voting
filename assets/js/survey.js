@@ -1,4 +1,4 @@
-import { PARTIES, SECTIONS, META } from "./survey-data.js?v=20261104";
+import { PARTIES, SECTIONS, META, GLOSSARY } from "./survey-data.js?v=20261105";
 import {
   LIKERT_LABELS,
   answeredCount,
@@ -6,9 +6,11 @@ import {
   escapeHtml,
   isAnswered,
   loadAnswers,
+  parseResultFile,
   saveAnswers,
+  saveWeights,
   scrollToId,
-} from "./utils.js?v=20261104";
+} from "./utils.js?v=20261105";
 
 const answers = loadAnswers();
 const sectionsRoot = document.getElementById("survey-sections");
@@ -39,6 +41,23 @@ function renderNav() {
   ).join("");
   if (desktopNav) desktopNav.innerHTML = items;
   if (mobileNav) mobileNav.innerHTML = items;
+}
+
+function renderStatementGlossary(statement) {
+  const terms = (statement.glossary || [])
+    .map((id) => GLOSSARY[id])
+    .filter(Boolean);
+  if (!terms.length) return "";
+  return `
+    <details class="statement-explainer">
+      <summary>Short explainer</summary>
+      ${terms
+        .map(
+          (term) =>
+            `<p><strong>${escapeHtml(term.term)}:</strong> ${escapeHtml(term.definition)}</p>`
+        )
+        .join("")}
+    </details>`;
 }
 
 function renderSections() {
@@ -73,6 +92,7 @@ function renderSections() {
             </div>
             <h3 class="statement-text">${escapeHtml(statement.text)}</h3>
             <p class="statement-plain">${escapeHtml(statement.plain)}</p>
+            ${renderStatementGlossary(statement)}
             <details class="statement-debate">
               <summary>What's the debate?</summary>
               <p>${escapeHtml(statement.context)}</p>
@@ -224,6 +244,27 @@ function bindEvents() {
         scrollToId(`statement-${next.id}`);
       } else {
         scrollToId("survey-footer");
+      }
+    });
+  }
+
+  const importInput = document.getElementById("import-survey");
+  const importStatus = document.getElementById("import-survey-status");
+  if (importInput) {
+    importInput.addEventListener("change", async () => {
+      const file = importInput.files?.[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const imported = parseResultFile(text, SECTIONS);
+        saveAnswers(imported.answers);
+        saveWeights(imported.weights);
+        if (importStatus) importStatus.textContent = "Saved result loaded. Reloading…";
+        window.location.reload();
+      } catch (error) {
+        if (importStatus) importStatus.textContent = `Could not load that file: ${error.message}`;
+      } finally {
+        importInput.value = "";
       }
     });
   }

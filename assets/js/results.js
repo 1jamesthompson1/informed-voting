@@ -1,31 +1,39 @@
-import { PARTIES, SECTIONS, META } from "./survey-data.js?v=20261104";
+import { PARTIES, SECTIONS, META } from "./survey-data.js?v=20261105";
 import {
   LIKERT_LABELS,
   STANCE_LABELS,
+  WEIGHT_LABELS,
   answeredCount,
   computeResults,
   copyText,
-  decodeAnswers,
+  debounce,
+  decodeResult,
   downloadFile,
   escapeHtml,
   formatPercent,
   loadAnswers,
+  loadWeights,
+  makeExportPayload,
   matchColour,
+  parseResultFile,
   partyById,
   resultUrl,
+  saveAnswers,
+  saveWeights,
   shareLink,
   topAgreements,
   topDifferences,
-} from "./utils.js?v=20261104";
+} from "./utils.js?v=20261105";
 
 const root = document.getElementById("results-root");
 const params = new URLSearchParams(window.location.search);
 const sharedCode = params.get("r");
-const sharedAnswers = sharedCode ? decodeAnswers(sharedCode, SECTIONS) : null;
-const sharedMode = Boolean(sharedCode);
-const storedAnswers = loadAnswers();
-const answers = sharedAnswers || storedAnswers;
-const hasAnswers = answeredCount(answers, SECTIONS) > 0;
+const sharedResult = sharedCode ? decodeResult(sharedCode, SECTIONS) : null;
+let sharedMode = Boolean(sharedCode);
+let importNotice = "";
+
+let answers = sharedResult?.answers || loadAnswers();
+let weights = sharedResult?.weights || loadWeights(SECTIONS);
 
 const partyOrder = ["national", "labour", "green", "act", "nzfirst", "tpm", "top"];
 const partyName = (id) => partyById(PARTIES, id)?.name || id;
@@ -41,16 +49,27 @@ function pct(value) {
   return value === null || value === undefined ? "–" : `${Math.round(value)}%`;
 }
 
+function allWeightsZero() {
+  return SECTIONS.every((section) => (weights[section.id] ?? 1) === 0);
+}
+
 function emptyState(message = "") {
   root.innerHTML = `
     <section class="results-hero">
       <div class="wrap">
         <p class="eyebrow">Your results</p>
         <h1>No answers yet.</h1>
-        <p class="lede">${message || "Answer the 44 policy statements first, then come back here to see which parties match you — and where you differ."}</p>
+        <p class="lede">${message || "Answer the 48 policy statements first, then come back here to see which parties match you — and where you differ."}</p>
         <div class="btn-row mt-3">
           <a class="btn" href="./index.html#survey">Take the survey <span aria-hidden="true">→</span></a>
           <a class="btn btn-ghost" href="./audit.html">Browse the policy matrix</a>
+        </div>
+        <div class="card card-pad mt-3">
+          <h2 style="font-size:1.3rem">Already saved a result?</h2>
+          <p class="small muted">Load a Clear Vote results file to restore your answers and your issue weights.</p>
+          <label class="btn btn-soft" for="import-result-empty">Load saved result</label>
+          <input id="import-result-empty" class="sr-only" type="file" accept="application/json,.json">
+          <p class="small muted mt-2 mb-0" id="import-status-empty" role="status" aria-live="polite"></p>
         </div>
       </div>
     </section>
@@ -60,11 +79,12 @@ function emptyState(message = "") {
           <span aria-hidden="true">◉</span>
           <div>
             <strong>Your answers stay on your device.</strong>
-            <p>Clear Vote does not have a server, an account or a database. Answers are saved in your browser’s local storage. A shared result link contains only your answers — no name, email or location.</p>
+            <p>Clear Vote does not have a server, an account or a database. Answers and weights are saved in your browser’s local storage. A shared result link contains only your answers and weights — no name, email or location.</p>
           </div>
         </div>
       </div>
     </section>`;
+  bindImport("import-result-empty", "import-status-empty");
 }
 
 function renderHero(results) {
@@ -72,13 +92,24 @@ function renderHero(results) {
   const answered = results.userAnswered.length;
   const total = META.totalStatements;
 
+  if (allWeightsZero()) {
+    return `
+      <section class="results-hero">
+        <div class="wrap">
+          <p class="eyebrow">Your results</p>
+          <h1>All issues are set to low importance.</h1>
+          <p class="lede">You answered ${answered} of ${total} statements, but every issue is weighted “Low”. Set at least one area to “Normal” or “High” below to see an overall match.</p>
+        </div>
+      </section>`;
+  }
+
   if (!top) {
     return `
       <section class="results-hero">
         <div class="wrap">
           <p class="eyebrow">Your results</p>
           <h1>Not enough answers for a reliable match.</h1>
-          <p class="lede">You answered ${answered} of ${total} statements. A party needs at least eight published positions among your answers before we show a score. Keep going to get a useful comparison.</p>
+          <p class="lede">You answered ${answered} of ${total} statements. A party needs at least eight published positions among your weighted answers before we show a score. Keep going, or lower the weight on areas where you have fewer answers.</p>
           <div class="btn-row mt-3">
             <a class="btn" href="./index.html#survey">Keep answering <span aria-hidden="true">→</span></a>
             <a class="btn btn-ghost" href="./audit.html">Browse the policy matrix</a>
@@ -95,7 +126,15 @@ function renderHero(results) {
             <span aria-hidden="true">↗</span>
             <div>
               <strong>You're viewing a shared result.</strong>
-              <p>This link contains someone else's answers. <a href="./index.html#survey">Take the survey yourself</a> to get your own result.</p>
+              <p>This link contains someone else's answers and weights. <a href="./index.html#survey">Take the survey yourself</a> to get your own result.</p>
+            </div>
+          </div>` : ""}
+        ${importNotice ? `
+          <div class="notice notice-accent mb-3 no-print">
+            <span aria-hidden="true">✓</span>
+            <div>
+              <strong>${escapeHtml(importNotice)}</strong>
+              <p>You can keep weighting the issues, change your answers, or download the updated result.</p>
             </div>
           </div>` : ""}
         <div class="result-top">
@@ -103,17 +142,58 @@ function renderHero(results) {
             <p class="eyebrow">Your closest match</p>
             <h1>${escapeHtml(top.party.name)}</h1>
             <p class="lede">${escapeHtml(top.party.fullName)} · led by ${escapeHtml(top.party.leader)}</p>
-            <p class="small muted mt-1">Based on ${top.matched} statements where both you and ${escapeHtml(top.party.name)} have a position. You answered ${answered} of ${total} statements.</p>
+            <p class="small muted mt-1">Based on ${top.matched} statements where both you and ${escapeHtml(top.party.name)} have a position; ${top.weightedMatched} count towards your weighted score. You answered ${answered} of ${total} statements.</p>
           </div>
           <div class="result-score">
             <span class="big">${Math.round(top.percentage)}%</span>
-            <span class="small">alignment</span>
+            <span class="small">weighted alignment</span>
           </div>
         </div>
         <div class="match-tags">
-          ${top.matched < 12 ? `<span class="tag tag-diff">Limited published positions — treat with care</span>` : ""}
+          ${top.weightedMatched < 12 ? `<span class="tag tag-diff">Limited weighted positions — treat with care</span>` : ""}
           ${top.coverage < 50 ? `<span class="tag tag-diff">Covers ${Math.round(top.coverage)}% of your answers</span>` : `<span class="tag tag-ok">Covers ${Math.round(top.coverage)}% of your answers</span>`}
+          <span class="tag">Weighted by your priorities</span>
           <span class="tag">Not a vote recommendation</span>
+        </div>
+      </div>
+    </section>`;
+}
+
+function renderWeightPanel() {
+  const rows = SECTIONS.map((section) => {
+    const value = weights[section.id] ?? 1;
+    return `
+      <div class="weight-row">
+        <label for="weight-${section.id}">${escapeHtml(section.shortTitle)}</label>
+        <input
+          id="weight-${section.id}"
+          type="range"
+          min="0"
+          max="2"
+          step="1"
+          value="${value}"
+          data-weight="${section.id}"
+          aria-describedby="weight-help-${section.id}"
+        >
+        <output for="weight-${section.id}" data-weight-output="${section.id}">${WEIGHT_LABELS[value]}</output>
+        <span class="sr-only" id="weight-help-${section.id}">Importance of ${escapeHtml(section.title)}: ${WEIGHT_LABELS[value]}</span>
+      </div>`;
+  }).join("");
+
+  return `
+    <section class="section-tight no-print" id="weight-panel">
+      <div class="wrap">
+        <div class="card card-pad">
+          <div class="weight-head">
+            <div>
+              <p class="eyebrow">What matters most to you?</p>
+              <h2>Weight the issues. Watch the ranking change.</h2>
+              <p class="small muted">Every issue starts at “Normal”. Move a slider to “Low” if it matters less to you, or “High” if it matters more. Your answers do not change; only the overall score does.</p>
+            </div>
+            <button class="btn btn-small btn-ghost" type="button" id="reset-weights">Reset to equal</button>
+          </div>
+          <div class="weight-grid">${rows}</div>
+          <p class="small muted mt-2 mb-0">The section-by-section chart below is not weighted — it shows your raw match in each area. The weights change the overall ranking and the bloc comparison. Your weights are saved on this device and included in shared links and downloaded results.</p>
         </div>
       </div>
     </section>`;
@@ -131,15 +211,15 @@ function renderRanked(results) {
     const value = result.percentage;
     const width = value === null ? 0 : Math.max(2, value);
     const coverageText = value === null
-      ? "not enough positions"
-      : `${result.matched} statement${result.matched === 1 ? "" : "s"}`;
+      ? "not enough weighted positions"
+      : `${result.weightedMatched} weighted statement${result.weightedMatched === 1 ? "" : "s"}`;
     return `
       <div class="party-bar" ${partyStyle(result.party)}>
         <div class="party-bar-name">
           <span class="party-dot"></span>
           ${escapeHtml(result.party.name)}
         </div>
-        <div class="party-bar-track" role="img" aria-label="${escapeHtml(result.party.name)}: ${value === null ? "not enough positions" : `${Math.round(value)} percent alignment`}">
+        <div class="party-bar-track" role="img" aria-label="${escapeHtml(result.party.name)}: ${value === null ? "not enough weighted positions" : `${Math.round(value)} percent weighted alignment`}">
           <div class="party-bar-fill" style="width:${width}%"></div>
         </div>
         <div class="party-bar-value">
@@ -155,11 +235,11 @@ function renderRanked(results) {
         <div class="section-head">
           <p class="eyebrow">The full ranking</p>
           <h2>How every party compares with your answers.</h2>
-          <p>Each score is the average match across the statements where both you and the party have a position. It is not a measure of how “good” a party is — only how close its published 2026 positions are to your answers.</p>
+          <p>Each score is the weighted average match across the statements where both you and the party have a position. It is not a measure of how “good” a party is — only how close its published 2026 positions are to your answers and priorities.</p>
         </div>
         <div class="card card-pad">
           <div class="party-bars">${bars}</div>
-          <p class="small muted mt-3 mb-0">“Not enough positions” means the party did not publish a clear 2026 position on enough of the statements you answered. It is not a score of zero.</p>
+          <p class="small muted mt-3 mb-0">“Not enough weighted positions” means the party did not publish a clear 2026 position on enough of the statements you answered and weighted above zero. It is not a score of zero. A party needs at least eight weighted positions to be ranked.</p>
         </div>
       </div>
     </section>`;
@@ -233,7 +313,7 @@ function renderTopMatch(results) {
               <div class="match-tags">${tags(weakest, "diff")}</div>
             </div>
           </div>
-          <p class="small muted mt-3 mb-0">These are the sections with the highest and lowest average match for ${escapeHtml(top.party.name)}. They are a quick guide, not a substitute for the individual statements below.</p>
+          <p class="small muted mt-3 mb-0">These are the sections with the highest and lowest raw match for ${escapeHtml(top.party.name)}. They are a quick guide, not a substitute for the individual statements below. Your issue weights affect the overall ranking, not these section scores.</p>
         </div>
 
         <div class="grid-2 mt-3">
@@ -244,6 +324,62 @@ function renderTopMatch(results) {
           <div>
             <h3>Where you differ most</h3>
             <div class="agreement-list">${differenceList}</div>
+          </div>
+        </div>
+      </div>
+    </section>`;
+}
+
+function renderIssueProfile(results) {
+  const top = results.top;
+  if (!top) return "";
+
+  const rows = results.sectionResults
+    .map((row) => {
+      const match = row.rows.find((item) => item.party.id === top.party.id);
+      if (!match || match.percentage === null) return null;
+      return {
+        section: row.section,
+        percentage: match.percentage,
+        matched: match.matched,
+        weight: weights[row.section.id] ?? 1,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.percentage - a.percentage);
+
+  if (!rows.length) return "";
+
+  const bars = rows
+    .map((row) => {
+      const colour = matchColour(row.percentage);
+      const weightLabel = WEIGHT_LABELS[row.weight];
+      return `
+        <div class="issue-row">
+          <span class="issue-name">${escapeHtml(row.section.shortTitle)}</span>
+          <div class="issue-track" title="${escapeHtml(row.section.title)}: ${Math.round(row.percentage)}% match">
+            <div class="issue-fill" style="width:${Math.max(2, row.percentage)}%;background:${colour.bg};border:1px solid ${colour.border}"></div>
+          </div>
+          <span class="issue-value">${Math.round(row.percentage)}%</span>
+          <span class="issue-weight" title="Your importance weight for this area">${escapeHtml(weightLabel)}</span>
+        </div>`;
+    })
+    .join("");
+
+  return `
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Your issue profile</p>
+          <h2>Where you align — and where you don’t.</h2>
+          <p>This is your raw match with <strong>${escapeHtml(top.party.name)}</strong> in each area, sorted from strongest to weakest. The badge on the right is the importance you gave that area; it changes the overall ranking, not the bar itself.</p>
+        </div>
+        <div class="card card-pad">
+          <div class="issue-profile">${bars}</div>
+          <div class="heatmap-legend mt-2">
+            <span><span class="legend-swatch" style="--swatch:hsl(0 48% 88%)"></span> Less aligned</span>
+            <span><span class="legend-swatch" style="--swatch:hsl(68 48% 88%)"></span> Mixed</span>
+            <span><span class="legend-swatch" style="--swatch:hsl(135 48% 88%)"></span> More aligned</span>
           </div>
         </div>
       </div>
@@ -275,8 +411,8 @@ function renderHeatmap(results) {
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Issue by issue</p>
-          <h2>Where your answers line up — and where they don’t.</h2>
-          <p>Each cell is the average match in that section. A dash means there were not enough published positions from that party in that section. Scroll sideways on a phone.</p>
+          <h2>Every party, every area.</h2>
+          <p>Each cell is the raw average match in that section, before your weights. A dash means there were not enough published positions from that party in that section. Scroll sideways on a phone.</p>
         </div>
         <div class="heatmap-wrap">
           <table class="heatmap">
@@ -488,7 +624,7 @@ function renderShare(results) {
   const shareText = top
     ? `My closest party is ${top.party.name} (${Math.round(top.percentage)}%) on Clear Vote — a blind, source-checked comparison of NZ 2026 policies. See your match:`
     : "Clear Vote — a blind, source-checked comparison of NZ 2026 policies.";
-  const url = resultUrl(answers, SECTIONS);
+  const url = resultUrl(answers, weights, SECTIONS);
   const encodedText = encodeURIComponent(`${shareText} ${url}`);
   const encodedUrl = encodeURIComponent(url);
 
@@ -498,7 +634,7 @@ function renderShare(results) {
         <div class="section-head">
           <p class="eyebrow">Share or print</p>
           <h2>Keep the result, or pass it on.</h2>
-          <p>The share link contains your answers so the recipient sees the same result. It does not contain your name, email or location. Nothing is uploaded to a server.</p>
+          <p>The share link contains your answers and your issue weights so the recipient sees the same result. It does not contain your name, email or location. Nothing is uploaded to a server.</p>
         </div>
         <div class="card card-pad">
           <div class="btn-row">
@@ -520,20 +656,49 @@ function renderShare(results) {
 
         <div class="print-only mt-3">
           <h2>Clear Vote — 2026 New Zealand election</h2>
-          <p>This result is a policy-alignment guide, not a vote recommendation. It is based on published party positions as at 4 November 2026. Every position is sourced on the audit page.</p>
+          <p>This result is a policy-alignment guide, not a vote recommendation. It is based on published party positions as at 5 November 2026. Every position is sourced on the audit page.</p>
         </div>
       </div>
     </section>`;
 }
 
-function renderResults(results) {
-  root.innerHTML = `
-    ${renderHero(results)}
+function renderSaveRestore() {
+  return `
+    <section class="section no-print">
+      <div class="wrap">
+        <div class="card card-pad">
+          <div class="section-head" style="margin-bottom:0.8rem">
+            <p class="eyebrow">Save &amp; restore</p>
+            <h2 style="font-size:1.7rem">Download your result. Load it again later.</h2>
+            <p class="small">The results file is a small JSON file containing your answers and issue weights. You can save it, email it to yourself, or open it on another device and load it here. It is not uploaded anywhere.</p>
+          </div>
+          <div class="btn-row">
+            <button class="btn" type="button" id="download-result-file">Download results file</button>
+            <label class="btn btn-soft" for="import-result">Load saved result</label>
+            <input id="import-result" class="sr-only" type="file" accept="application/json,.json">
+          </div>
+          <p class="small muted mt-2 mb-0" id="save-status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>`;
+}
+
+function renderBody(results) {
+  return `
     ${renderRanked(results)}
     ${renderTopMatch(results)}
+    ${renderIssueProfile(results)}
     ${renderHeatmap(results)}
     ${renderVoteImpact(results)}
     ${renderShare(results)}
+    ${renderSaveRestore()}`;
+}
+
+function renderPage(results) {
+  root.innerHTML = `
+    <div id="weighted-hero">${renderHero(results)}</div>
+    ${renderWeightPanel()}
+    <div id="weighted-body">${renderBody(results)}</div>
     <section class="section">
       <div class="wrap">
         <div class="notice notice-accent">
@@ -549,7 +714,141 @@ function renderResults(results) {
         </div>
       </div>
     </section>`;
+  bindWeightPanel();
   bindShare(results);
+  bindSaveRestore(results);
+}
+
+function refreshWeighted() {
+  saveWeights(weights);
+  const results = computeResults(answers, SECTIONS, PARTIES, weights);
+  const hero = document.getElementById("weighted-hero");
+  const body = document.getElementById("weighted-body");
+  if (hero) hero.innerHTML = renderHero(results);
+  if (body) body.innerHTML = renderBody(results);
+  bindShare(results);
+  bindSaveRestore(results);
+  document.title = results.top
+    ? `My closest party: ${results.top.party.name} — Clear Vote`
+    : "Your results — Clear Vote";
+}
+
+function bindWeightPanel() {
+  const panel = document.getElementById("weight-panel");
+  if (!panel) return;
+
+  const update = debounce(() => refreshWeighted(), 80);
+
+  panel.querySelectorAll("input[data-weight]").forEach((input) => {
+    input.addEventListener("input", () => {
+      const sectionId = input.dataset.weight;
+      const value = Number(input.value);
+      weights[sectionId] = value;
+      const output = panel.querySelector(`[data-weight-output="${sectionId}"]`);
+      if (output) output.textContent = WEIGHT_LABELS[value];
+      const help = panel.querySelector(`#weight-help-${sectionId}`);
+      if (help) {
+        const section = SECTIONS.find((item) => item.id === sectionId);
+        help.textContent = `Importance of ${section?.title || sectionId}: ${WEIGHT_LABELS[value]}`;
+      }
+      update();
+    });
+  });
+
+  const reset = () => {
+    for (const section of SECTIONS) weights[section.id] = 1;
+    saveWeights(weights);
+    panel.querySelectorAll("input[data-weight]").forEach((input) => {
+      input.value = "1";
+      const output = panel.querySelector(`[data-weight-output="${input.dataset.weight}"]`);
+      if (output) output.textContent = WEIGHT_LABELS[1];
+    });
+    refreshWeighted();
+  };
+
+  panel.querySelector("#reset-weights")?.addEventListener("click", reset);
+}
+
+function bindShare(results) {
+  const status = document.getElementById("share-status");
+  const setStatus = (message) => {
+    if (status) status.textContent = message;
+  };
+
+  document.getElementById("share-native")?.addEventListener("click", async () => {
+    const outcome = await shareLink(
+      answers,
+      weights,
+      SECTIONS,
+      "My Clear Vote result",
+      results.top
+        ? `My closest party is ${results.top.party.name} (${Math.round(results.top.percentage)}%) on Clear Vote.`
+        : "Clear Vote — compare NZ 2026 policies."
+    );
+    if (outcome === "copied") setStatus("Link copied to your clipboard.");
+    else if (outcome === "failed") setStatus("Could not share automatically. Use “Copy link” instead.");
+    else if (outcome === "shared") setStatus("Shared.");
+  });
+
+  document.getElementById("copy-link")?.addEventListener("click", async () => {
+    const ok = await copyText(resultUrl(answers, weights, SECTIONS));
+    setStatus(ok ? "Link copied to your clipboard." : "Could not copy the link. You can copy it from the address bar.");
+  });
+
+  document.getElementById("download-card")?.addEventListener("click", async () => {
+    await downloadResultCard(results);
+    setStatus("Result card downloaded.");
+  });
+
+  document.getElementById("print-result")?.addEventListener("click", () => {
+    window.print();
+  });
+}
+
+function bindImport(inputId, statusId) {
+  const input = document.getElementById(inputId);
+  const status = document.getElementById(statusId);
+  if (!input) return;
+  input.addEventListener("change", async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const imported = parseResultFile(text, SECTIONS);
+      answers = imported.answers;
+      weights = imported.weights;
+      sharedMode = false;
+      importNotice = "Saved result loaded.";
+      saveAnswers(answers);
+      saveWeights(weights);
+      if (status) status.textContent = "Saved result loaded. Recalculating…";
+      showResults();
+    } catch (error) {
+      if (status) status.textContent = `Could not load that file: ${error.message}`;
+    } finally {
+      input.value = "";
+    }
+  });
+}
+
+function bindSaveRestore(results) {
+  const status = document.getElementById("save-status");
+  const setStatus = (message) => {
+    if (status) status.textContent = message;
+  };
+
+  document.getElementById("download-result-file")?.addEventListener("click", () => {
+    const payload = makeExportPayload(answers, weights, results, SECTIONS, META);
+    const date = new Date().toISOString().slice(0, 10);
+    downloadFile(
+      `clearvote-result-${date}.json`,
+      JSON.stringify(payload, null, 2),
+      "application/json"
+    );
+    setStatus("Results file downloaded. You can load it again on the results page.");
+  });
+
+  bindImport("import-result", "save-status");
 }
 
 async function downloadResultCard(results) {
@@ -591,7 +890,7 @@ async function downloadResultCard(results) {
 
   ctx.fillStyle = muted;
   ctx.font = "400 24px ui-sans-serif, system-ui, sans-serif";
-  ctx.fillText("policy alignment", 64, 370);
+  ctx.fillText("weighted policy alignment", 64, 370);
 
   const topThree = results.ranked.slice(0, 3);
   topThree.forEach((result, index) => {
@@ -630,56 +929,21 @@ async function downloadResultCard(results) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function bindShare(results) {
-  const status = document.getElementById("share-status");
-  const setStatus = (message) => {
-    if (status) status.textContent = message;
-  };
-
-  document.getElementById("share-native")?.addEventListener("click", async () => {
-    const outcome = await shareLink(
-      answers,
-      SECTIONS,
-      "My Clear Vote result",
-      results.top
-        ? `My closest party is ${results.top.party.name} (${Math.round(results.top.percentage)}%) on Clear Vote.`
-        : "Clear Vote — compare NZ 2026 policies."
-    );
-    if (outcome === "copied") setStatus("Link copied to your clipboard.");
-    else if (outcome === "failed") setStatus("Could not share automatically. Use “Copy link” instead.");
-    else if (outcome === "shared") setStatus("Shared.");
-  });
-
-  document.getElementById("copy-link")?.addEventListener("click", async () => {
-    const ok = await copyText(resultUrl(answers, SECTIONS));
-    setStatus(ok ? "Link copied to your clipboard." : "Could not copy the link. You can copy it from the address bar.");
-  });
-
-  document.getElementById("download-card")?.addEventListener("click", async () => {
-    await downloadResultCard(results);
-    setStatus("Result card downloaded.");
-  });
-
-  document.getElementById("print-result")?.addEventListener("click", () => {
-    window.print();
-  });
-}
-
-function init() {
+function showResults() {
   if (!root) return;
-  if (sharedCode && !sharedAnswers) {
+  if (sharedCode && !sharedResult) {
     emptyState("That shared result link is not valid. It may have been cut off when copied. Take the survey to get your own result.");
     return;
   }
-  if (!hasAnswers) {
+  if (answeredCount(answers, SECTIONS) === 0) {
     emptyState();
     return;
   }
-  const results = computeResults(answers, SECTIONS, PARTIES);
-  renderResults(results);
+  const results = computeResults(answers, SECTIONS, PARTIES, weights);
+  renderPage(results);
   document.title = results.top
     ? `My closest party: ${results.top.party.name} — Clear Vote`
     : "Your results — Clear Vote";
 }
 
-init();
+showResults();

@@ -2,11 +2,13 @@
 
 **Compare policies, not personalities.** A static, source-checked policy comparison for the 2026 New Zealand general election.
 
-The site is a long, blinded survey across 11 areas of government. You answer 44 statements in about 30 minutes, then see which parties match you, where you differ, and how your vote translates into seats under MMP. Every party position is linked to a source on the audit page.
+The site is a long, blinded survey across 12 areas of government. You answer 48 statements in about 35 minutes, then see which parties match you, where you differ, and how your vote translates into seats under MMP. Every party position is linked to a source on the audit page.
+
+You can weight the issues that matter most to you, download a results file and load it again later, print a clean sheet, share a private result link, or download a result card. A glossary explains complex terms, and a current bills page tracks a selection of recent and current legislation.
 
 - **Live site:** [james.sjhl.nz/informed-voting](https://james.sjhl.nz/informed-voting/)
 - **Election:** Saturday 7 November 2026
-- **Data snapshot:** 4 November 2026
+- **Data snapshot:** 5 November 2026
 - **Parties:** National, Labour, Greens, ACT, New Zealand First, Te Pāti Māori, The Opportunity Party (TOP)
 - **License:** MIT (code and original text). Party policy material remains the property of its owners and is cited, not reproduced at length.
 
@@ -18,9 +20,11 @@ The project is motivated by the idea of the “good voter”: a voter with an ac
 
 ```text
 .
-├── index.html              # home + the 44-statement survey
+├── index.html              # home + the 48-statement survey
 ├── results.html            # results shell (rendered from localStorage or ?r=)
 ├── audit.html              # full policy matrix + sources
+├── bills.html              # current bills and flashpoints
+├── glossary.html           # plain-language glossary
 ├── methods.html            # methodology, scoring, limitations
 ├── motivation.html         # why the project exists
 ├── 404.html
@@ -35,6 +39,7 @@ The project is motivated by the idea of the “good voter”: a voter with an ac
 │       ├── survey.js       # survey rendering + autosave
 │       ├── results.js      # results, MMP graphic, share card
 │       ├── audit.js        # matrix, filters, party profiles
+│       ├── glossary.js     # glossary rendering + search
 │       └── common.js       # mobile nav, external links
 ├── scripts/build_data.py   # authoring pipeline (optional; see below)
 └── .nojekyll
@@ -55,7 +60,7 @@ Do not open `index.html` directly with `file://` — some browsers block ES modu
 
 The site is static. There is no backend, database or account system.
 
-- `assets/js/survey-data.js` exports `PARTIES`, `SECTIONS` and `META`.
+- `assets/js/survey-data.js` exports `PARTIES`, `SECTIONS`, `META` and `GLOSSARY`.
 - Each statement has a `positions` object keyed by party id. A position is:
   ```js
   {
@@ -71,8 +76,9 @@ The site is static. There is no backend, database or account system.
   ```
 - A missing party key means **no clear published position** in the material reviewed. It is excluded from that party’s score; it is not treated as zero.
 - `META.polling` contains the 2 November 2026 polling snapshot used for the seat graphic. It is a snapshot, not a prediction.
-- Answers are stored in `localStorage` under `clearvote.answers.v1`.
-- Shared result links encode the answers in the URL (`?r=…`). No personal data is included.
+- Answers are stored in `localStorage` under `clearvote.answers.v1`; issue weights are stored under `clearvote.weights.v1`.
+- Shared result links encode the answers and weights in the URL (`?r=…`). No personal data is included.
+- The results page can export a `clearvote-result-YYYY-MM-DD.json` file containing the answers, weights and a summary. The same file can be loaded on the results page or the survey page to restore the result.
 
 ### Authoring pipeline
 
@@ -104,6 +110,7 @@ All paths are relative, so the site works at a project URL such as `https://jame
 - Every non-null position is linked on `audit.html`.
 - The full dataset is downloadable at `assets/data/positions.json`.
 - If you find an error, open an issue with the statement ID, party, current coding, proposed coding and source. Corrections are logged on the methods page.
+- The current bills page is a selection, not a complete legislative tracker. Statuses were checked on 5 November 2026; the official Parliament and Legislation websites are authoritative.
 
 This project is independent and not affiliated with any party, candidate or campaign. It does not accept donations or run advertising.
 

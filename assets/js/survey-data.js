@@ -1,4 +1,4 @@
-// Generated from scripts/build_data.py on 2026-11-04.
+// Generated from scripts/build_data.py on 2026-11-05.
 // The script is an authoring tool; the published site only needs this file.
 // You can also edit this file directly. If you do, update META.version and
 // note the change in the changelog on methods.html.
@@ -246,7 +246,10 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "capital-gains-tax"
+        ]
       },
       {
         "id": "e3",
@@ -324,7 +327,10 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "wealth-tax"
+        ]
       },
       {
         "id": "e4",
@@ -874,7 +880,10 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "pharmac"
+        ]
       },
       {
         "id": "he3",
@@ -1110,7 +1119,10 @@ export const SECTIONS = [
               "type": "secondary"
             }
           }
-        }
+        },
+        "glossary": [
+          "charter-schools"
+        ]
       },
       {
         "id": "ed2",
@@ -1324,7 +1336,10 @@ export const SECTIONS = [
               "type": "secondary"
             }
           }
-        }
+        },
+        "glossary": [
+          "te-tiriti"
+        ]
       }
     ],
     "blindedHotTopic": "Literacy and numeracy, school lunches, charter schools and student debt are all contested. The debate is whether to expand school choice, keep universal lunches, make tertiary study free, or focus on the basics. The history curriculum is also a flashpoint."
@@ -1424,7 +1439,10 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "three-strikes"
+        ]
       },
       {
         "id": "c2",
@@ -1502,7 +1520,10 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "gang-patch-ban"
+        ]
       },
       {
         "id": "c3",
@@ -1658,7 +1679,10 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "boot-camps"
+        ]
       }
     ],
     "blindedHotTopic": "Violent crime and youth offending are debated alongside prison numbers and rehabilitation. The debate is whether to impose tougher sentences and give police more powers, or invest in prevention and rehabilitation. Gang powers and boot camps are especially contested."
@@ -1836,7 +1860,11 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "agricultural-emissions",
+          "ets"
+        ]
       },
       {
         "id": "cl3",
@@ -1914,7 +1942,11 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "net-zero",
+          "ets"
+        ]
       },
       {
         "id": "cl4",
@@ -2434,7 +2466,10 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "aukus"
+        ]
       },
       {
         "id": "f3",
@@ -2650,7 +2685,12 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "entrench",
+          "te-tiriti",
+          "co-governance"
+        ]
       },
       {
         "id": "t2",
@@ -2718,7 +2758,11 @@ export const SECTIONS = [
               "type": "secondary"
             }
           }
-        }
+        },
+        "glossary": [
+          "binding-referendum",
+          "te-tiriti"
+        ]
       },
       {
         "id": "t3",
@@ -3118,7 +3162,12 @@ export const SECTIONS = [
               "type": "official"
             }
           }
-        }
+        },
+        "glossary": [
+          "mmp",
+          "sainte-lague",
+          "overhang"
+        ]
       }
     ],
     "blindedHotTopic": "Roads, public transport, rail and infrastructure debt are major choices. The debate is whether to build more motorways, invest in public transport and rail, make fares cheaper, or borrow more for infrastructure. Congestion and emissions are central."
@@ -3296,7 +3345,10 @@ export const SECTIONS = [
               "type": "secondary"
             }
           }
-        }
+        },
+        "glossary": [
+          "universal-basic-income"
+        ]
       },
       {
         "id": "w3",
@@ -3456,16 +3508,274 @@ export const SECTIONS = [
       }
     ],
     "blindedHotTopic": "Benefits, superannuation and the cost of living are central. The debate is whether to increase benefits, impose work obligations, introduce a universal income, or raise the age of eligibility for NZ Super. Child poverty and work incentives are both at stake."
+  },
+  {
+    "id": "ai",
+    "number": 12,
+    "title": "AI and technology",
+    "shortTitle": "AI & tech",
+    "intro": "AI is spreading through work, public services and politics. Parties differ on how to regulate it, how to power the data centres behind it, and how to protect people from its harms.",
+    "hotTopic": "New Zealand has no overarching AI law. Labour and the Greens both propose an AI office, but the Greens go further with a dedicated AI plan, a one-year pause on new AI data centres, water and electricity limits, and rules on deepfakes. National focuses on AI adoption for small businesses and approving data centres only with more power generation. ACT's digital plan prioritises innovation and opposes blanket bans. Te Pāti Māori emphasises Māori data sovereignty. TOP focuses on copyright and online safety. The Deepfake Digital Harm and Exploitation Bill is before Parliament, and the Social Security (Modernisation) Amendment Bill has expanded automated decision-making in welfare.",
+    "debate": "AI can improve productivity and public services, but it can also spread misinformation, entrench bias, consume large amounts of energy and water, and concentrate power in a few companies. Regulation can reduce harm but may slow innovation; doing nothing can leave the public exposed.",
+    "sources": [
+      {
+        "label": "OECD: AI Principles",
+        "url": "https://oecd.ai/en/ai-principles"
+      },
+      {
+        "label": "NZ Privacy Commissioner",
+        "url": "https://www.privacy.org.nz/"
+      },
+      {
+        "label": "AI Forum NZ",
+        "url": "https://aiforum.org.nz/"
+      }
+    ],
+    "statements": [
+      {
+        "id": "ai1",
+        "text": "The Government should require safety testing and transparency for advanced AI systems before they are deployed.",
+        "plain": "Developers of powerful AI systems would have to test them for serious risks and publish information about how they work before releasing them to the public.",
+        "context": "Supporters say testing and transparency reduce the risk of accidents, bias and misuse. Critics say heavy rules could slow innovation and favour large companies that can afford compliance.",
+        "positions": {
+          "labour": {
+            "stance": 1,
+            "evidence": "Labour would create an AI office to guide safe use, but has not promised pre-deployment safety testing.",
+            "basis": "Create an office to help safely guide the use of AI",
+            "source": {
+              "label": "Labour: Our Policies 2026 (official)",
+              "url": "https://www.labour.org.nz/our-policies/",
+              "type": "official"
+            }
+          },
+          "green": {
+            "stance": 2,
+            "evidence": "The Greens' AI plan includes an AI office, transparency and safe-use rules.",
+            "basis": "Create an AI office and require transparent AI use",
+            "source": {
+              "label": "Green Party: Manifesto 2026 (official)",
+              "url": "https://www.greens.org.nz/manifesto_2026",
+              "type": "official"
+            }
+          },
+          "national": {
+            "stance": 0,
+            "evidence": "National focuses on AI adoption for business, not safety testing.",
+            "basis": "Support small businesses to adopt artificial intelligence",
+            "source": {
+              "label": "'Building the Future: National's 47-point plan to support small businesses' (PDF), undated (accessed 07 October 2026)",
+              "url": "https://web.archive.org/web/20261007034501/https://assets.national.org.nz/web/prod/National%E2%80%99s%2047-point%20plan%20to%20support%20Small%20Businesses.pdf?v=1791324870",
+              "type": "official"
+            }
+          },
+          "act": {
+            "stance": 0,
+            "evidence": "ACT's digital plan focuses on innovation and reducing regulation; it has no AI safety testing commitment.",
+            "basis": null,
+            "source": {
+              "label": "ACT: Unlocking New Zealand's Digital Economy (PDF)",
+              "url": "https://web.archive.org/web/20260828031152/https://assets.nationbuilder.com/actnz/pages/36470/attachments/original/1787714690/Unlocking_New_Zealand%27s_Digital_Economy_FINAL.pdf?1787714690",
+              "type": "official"
+            }
+          },
+          "top": {
+            "stance": 0,
+            "evidence": "TOP's AI policy focuses on copyright, not safety testing.",
+            "basis": "Back an AI framework on copyright protection",
+            "source": {
+              "label": "Opportunity: Policy 2026 (official)",
+              "url": "https://www.opportunity.org.nz/policy",
+              "type": "official"
+            }
+          }
+        },
+        "glossary": [
+          "ai-safety-testing",
+          "ai-office"
+        ]
+      },
+      {
+        "id": "ai2",
+        "text": "The Government should pause new AI data centres until their energy and water use is assessed.",
+        "plain": "No new large data centres would be approved for a period while officials assess how much electricity and water they use and what that means for the grid and local communities.",
+        "context": "Supporters say data centres can strain electricity grids and water supplies and that New Zealand should not trade cheap power for a few jobs. Critics say a pause would deter investment and that the effects can be managed through conditions.",
+        "positions": {
+          "green": {
+            "stance": 2,
+            "evidence": "The Greens would impose a one-year pause on consenting new AI data centres.",
+            "basis": "Implement a one-year pause on AI data centers",
+            "source": {
+              "label": "'Call for a One Year Pause on Consenting New AI Data Centres', 26 July 2026 (accessed 18 August 2026)",
+              "url": "https://web.archive.org/web/20260818011123/https://www.greens.org.nz/call_for_one_year_pause_on_consenting_new_ai_data_centres",
+              "type": "official"
+            }
+          },
+          "labour": {
+            "stance": 1,
+            "evidence": "Labour would set rules for data centres around resource use, but has not promised a pause.",
+            "basis": "Set rules for data centres around resource use",
+            "source": {
+              "label": "Labour: Our Policies 2026 (official)",
+              "url": "https://www.labour.org.nz/our-policies/",
+              "type": "official"
+            }
+          },
+          "national": {
+            "stance": -1,
+            "evidence": "National would approve data centres only with more power generation, not pause them.",
+            "basis": "Approve data centres only when they are accompanied by more power production",
+            "source": {
+              "label": "'Affordable Power Kiwis can rely on ', 2 October 2026 (accessed 02 October 2026)",
+              "url": "https://web.archive.org/web/20261001233034/https://www.national.org.nz/news/261002-simeonbrown",
+              "type": "official"
+            }
+          },
+          "act": {
+            "stance": -2,
+            "evidence": "ACT's digital economy plan prioritises growth and opposes blanket bans.",
+            "basis": null,
+            "source": {
+              "label": "ACT: Unlocking New Zealand's Digital Economy (PDF)",
+              "url": "https://web.archive.org/web/20260828031152/https://assets.nationbuilder.com/actnz/pages/36470/attachments/original/1787714690/Unlocking_New_Zealand%27s_Digital_Economy_FINAL.pdf?1787714690",
+              "type": "official"
+            }
+          }
+        },
+        "glossary": [
+          "data-centre"
+        ]
+      },
+      {
+        "id": "ai3",
+        "text": "The Government should require labels or watermarking for AI-generated political content during elections.",
+        "plain": "Political ads and videos made or altered with AI would have to carry a clear label, so voters can tell them apart from real footage.",
+        "context": "Supporters say deepfakes can swing elections and that labels help voters judge what is real. Critics say labels are easy to remove and that the rules could capture satire or ordinary political speech.",
+        "positions": {
+          "labour": {
+            "stance": 2,
+            "evidence": "Labour would tighten digital regulation, especially around deepfakes.",
+            "basis": "Tighten digital regulation, especially around deepfakes, children and social media",
+            "source": {
+              "label": "Labour: Our Policies 2026 (official)",
+              "url": "https://www.labour.org.nz/our-policies/",
+              "type": "official"
+            }
+          },
+          "green": {
+            "stance": 2,
+            "evidence": "The Greens would regulate AI to limit harm from scams and deepfakes.",
+            "basis": "Regulate artificial intelligence to limit the harm from scams and deepfakes",
+            "source": {
+              "label": "Green Party: Manifesto 2026 (official)",
+              "url": "https://www.greens.org.nz/manifesto_2026",
+              "type": "official"
+            }
+          },
+          "national": {
+            "stance": 0,
+            "evidence": "National's online policy focuses on social media age limits, not deepfake labelling.",
+            "basis": "Ban under-16 year olds from social media",
+            "source": {
+              "label": "'Government moves to ban U16s from social media', undated (accessed 26 August 2026)",
+              "url": "https://web.archive.org/web/20260826043303/https://www.national.org.nz/news/260824-christopherluxon",
+              "type": "official"
+            }
+          },
+          "act": {
+            "stance": -1,
+            "evidence": "ACT's digital policy prioritises free expression and innovation over new content rules.",
+            "basis": null,
+            "source": {
+              "label": "ACT: Unlocking New Zealand's Digital Economy (PDF)",
+              "url": "https://web.archive.org/web/20260828031152/https://assets.nationbuilder.com/actnz/pages/36470/attachments/original/1787714690/Unlocking_New_Zealand%27s_Digital_Economy_FINAL.pdf?1787714690",
+              "type": "official"
+            }
+          },
+          "top": {
+            "stance": 0,
+            "evidence": "TOP supports the online safety bill going to select committee, but has no specific deepfake labelling policy.",
+            "basis": "Support the online safety bill on a potential under-16 social media ban to select committee",
+            "source": {
+              "label": "'Opportunity to support online safety bill to select committee', 25 August 2026 (accessed 28 August 2026)",
+              "url": "https://web.archive.org/web/20260828093652/https://www.opportunity.org.nz/opportunity_to_support_online_safety_bill_to_select_committee",
+              "type": "official"
+            }
+          }
+        },
+        "glossary": [
+          "deepfake"
+        ]
+      },
+      {
+        "id": "ai4",
+        "text": "The Government should fund retraining and income support for workers whose jobs are displaced by AI.",
+        "plain": "People who lose work because of automation would get help to retrain, and temporary income support while they do.",
+        "context": "Supporters say the people who lose jobs should not bear the cost of a technology shift they did not choose. Critics say it is hard to predict which jobs will go and that general economic growth and a strong safety net are better responses.",
+        "positions": {
+          "labour": {
+            "stance": 2,
+            "evidence": "Labour would create a workforce plan to ensure people benefit from AI.",
+            "basis": "Create a workforce plan to ensure people benefit from AI",
+            "source": {
+              "label": "Labour: Our Policies 2026 (official)",
+              "url": "https://www.labour.org.nz/our-policies/",
+              "type": "official"
+            }
+          },
+          "green": {
+            "stance": 1,
+            "evidence": "The Greens would protect workers' rights in AI use, but have not promised a specific retraining fund.",
+            "basis": "Protect children and worker's rights in the use of AI",
+            "source": {
+              "label": "Green Party: Manifesto 2026 (official)",
+              "url": "https://www.greens.org.nz/manifesto_2026",
+              "type": "official"
+            }
+          },
+          "national": {
+            "stance": 0,
+            "evidence": "National focuses on business AI adoption, not worker transition support.",
+            "basis": "Support small businesses to adopt artificial intelligence",
+            "source": {
+              "label": "'Building the Future: National's 47-point plan to support small businesses' (PDF), undated (accessed 07 October 2026)",
+              "url": "https://web.archive.org/web/20261007034501/https://assets.national.org.nz/web/prod/National%E2%80%99s%2047-point%20plan%20to%20support%20Small%20Businesses.pdf?v=1791324870",
+              "type": "official"
+            }
+          },
+          "act": {
+            "stance": -1,
+            "evidence": "ACT's digital plan focuses on innovation and reducing regulation, not worker transition payments.",
+            "basis": null,
+            "source": {
+              "label": "ACT: Unlocking New Zealand's Digital Economy (PDF)",
+              "url": "https://web.archive.org/web/20260828031152/https://assets.nationbuilder.com/actnz/pages/36470/attachments/original/1787714690/Unlocking_New_Zealand%27s_Digital_Economy_FINAL.pdf?1787714690",
+              "type": "official"
+            }
+          },
+          "top": {
+            "stance": 1,
+            "evidence": "TOP's universal income would support people through job transitions, but it is not AI-specific.",
+            "basis": "Introduce a universal income for citizens of up to $370 a week",
+            "source": {
+              "label": "Opportunity: Policy 2026 (official)",
+              "url": "https://www.opportunity.org.nz/policy",
+              "type": "official"
+            }
+          }
+        }
+      }
+    ],
+    "blindedHotTopic": "AI is spreading through work, public services and politics. The debate is whether to regulate it for safety and transparency, pause energy-hungry data centres, label deepfakes, and support workers whose jobs change. The risks include bias, scams, misinformation and the concentration of power."
   }
 ];
 
 export const META = {
-  "version": "2026-11-04.1",
-  "updated": "2026-11-04",
+  "version": "2026-11-05.1",
+  "updated": "2026-11-05",
   "electionDate": "2026-11-07",
   "electionName": "2026 New Zealand general election",
-  "totalStatements": 44,
-  "totalSections": 11,
+  "totalStatements": 48,
+  "totalSections": 12,
   "polling": {
     "date": "2026-11-02",
     "source": "election2026.nz polling average",
@@ -3506,5 +3816,108 @@ export const META = {
         "top"
       ]
     }
+  }
+};
+
+export const GLOSSARY = {
+  "aukus": {
+    "term": "AUKUS",
+    "definition": "A security partnership between Australia, the United Kingdom and the United States. “Pillar 2” covers advanced military technology and cooperation beyond nuclear submarines. New Zealand is not a member; joining Pillar 2 would deepen defence and technology ties with those countries."
+  },
+  "mmp": {
+    "term": "MMP",
+    "definition": "Mixed-member proportional representation. You have two votes: a party vote and an electorate vote. The party vote decides each party’s share of seats; the electorate vote decides the local MP."
+  },
+  "sainte-lague": {
+    "term": "Sainte-Laguë",
+    "definition": "The formula New Zealand uses to share party-vote seats among parties that clear the 5% threshold or win an electorate seat."
+  },
+  "overhang": {
+    "term": "Overhang",
+    "definition": "When a party wins more electorate seats than its party vote entitles it to, Parliament can grow beyond the usual 120 seats."
+  },
+  "capital-gains-tax": {
+    "term": "Capital gains tax",
+    "definition": "A tax on the profit made when an asset, such as an investment property, is sold. The family home is usually exempt in the proposals discussed in this survey."
+  },
+  "wealth-tax": {
+    "term": "Wealth tax",
+    "definition": "An annual tax on a person’s net wealth above a threshold, such as assets over $10 million. It is different from a capital gains tax, which is paid when an asset is sold."
+  },
+  "land-value-tax": {
+    "term": "Land value tax",
+    "definition": "A tax on the value of land, usually excluding buildings. It is paid by the landowner, whether or not the land is developed."
+  },
+  "ets": {
+    "term": "Emissions trading scheme (ETS)",
+    "definition": "A cap-and-trade system that puts a price on greenhouse gas emissions. Businesses must hold units for the emissions they produce."
+  },
+  "agricultural-emissions": {
+    "term": "Agricultural emissions pricing",
+    "definition": "Putting a price on methane and nitrous oxide from farming, either through the ETS or a separate farm levy. It is contested because agriculture is New Zealand’s largest source of emissions."
+  },
+  "net-zero": {
+    "term": "Net zero",
+    "definition": "Balancing the greenhouse gases New Zealand emits with the gases it removes or offsets, so the net contribution is zero. New Zealand’s target is 2050."
+  },
+  "pharmac": {
+    "term": "Pharmac",
+    "definition": "The government agency that decides which medicines are publicly funded in New Zealand, and negotiates their prices."
+  },
+  "te-tiriti": {
+    "term": "Te Tiriti o Waitangi",
+    "definition": "The Treaty of Waitangi, signed in 1840. It is a founding document of New Zealand and shapes the relationship between the Crown and Māori. The Māori and English texts differ, and both are part of the constitutional framework."
+  },
+  "co-governance": {
+    "term": "Co-governance",
+    "definition": "Arrangements where the Crown and Māori share decision-making power over a resource, place or public service."
+  },
+  "entrench": {
+    "term": "Entrench",
+    "definition": "To protect a law by requiring a special majority, often 75% of Parliament, to change or repeal it. Entrenchment limits what a simple majority can do."
+  },
+  "binding-referendum": {
+    "term": "Binding referendum",
+    "definition": "A public vote whose result the government is committed to implement. A non-binding referendum is advisory."
+  },
+  "three-strikes": {
+    "term": "Three Strikes",
+    "definition": "A sentencing law that imposes the maximum sentence for a third serious violent or sexual offence, with limited exceptions. It reduces the judge’s discretion."
+  },
+  "charter-schools": {
+    "term": "Charter schools",
+    "definition": "Publicly funded schools run by independent sponsors, outside the normal state school rules. They are also called partnership schools."
+  },
+  "boot-camps": {
+    "term": "Military-style boot camps",
+    "definition": "Residential programmes for young offenders with military-style discipline, training and routine. They are also called military-style academies."
+  },
+  "data-centre": {
+    "term": "Data centre",
+    "definition": "A large building full of computers that stores and processes data. AI data centres use large amounts of electricity and water for cooling."
+  },
+  "deepfake": {
+    "term": "Deepfake",
+    "definition": "An image, video or audio recording created or altered with AI to show someone saying or doing something they did not. Deepfakes can be used for scams, abuse or political misinformation."
+  },
+  "ai-safety-testing": {
+    "term": "AI safety testing",
+    "definition": "Testing an AI system for serious risks, such as bias, misuse or dangerous capabilities, before it is released. It can be done by the developer, an independent auditor or a regulator."
+  },
+  "ai-office": {
+    "term": "AI office",
+    "definition": "A government body that would coordinate AI policy, regulation and advice across departments."
+  },
+  "universal-basic-income": {
+    "term": "Universal basic income",
+    "definition": "A regular cash payment to every adult, regardless of whether they work or how much they earn. It is different from targeted benefits."
+  },
+  "fast-track": {
+    "term": "Fast-track approvals",
+    "definition": "A consenting process that allows major projects to be approved faster, with fewer opportunities for public submissions and appeals. It is used for some infrastructure, housing, mining and energy projects."
+  },
+  "gang-patch-ban": {
+    "term": "Gang patch ban",
+    "definition": "A law banning the display of gang insignia in public places, backed by police powers to seize patches and disperse gang gatherings."
   }
 };

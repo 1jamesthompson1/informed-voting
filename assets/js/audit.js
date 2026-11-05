@@ -1,11 +1,11 @@
-import { PARTIES, SECTIONS, META } from "./survey-data.js?v=20261104";
+import { PARTIES, SECTIONS, META, GLOSSARY } from "./survey-data.js?v=20261105";
 import {
   STANCE_LABELS,
   STANCE_SHORT,
   downloadFile,
   escapeHtml,
   partyById,
-} from "./utils.js?v=20261104";
+} from "./utils.js?v=20261105";
 
 const root = document.getElementById("audit-root");
 const controls = document.getElementById("audit-controls");
@@ -32,6 +32,17 @@ function sourceLink(position) {
   if (!position?.source?.url) return "";
   const type = position.source.type === "secondary" ? "secondary" : "official";
   return `<a href="${escapeHtml(position.source.url)}" rel="noopener" target="_blank">source</a><span class="source-type ${type}">${type}</span>`;
+}
+
+function explainerHtml(statement) {
+  const terms = (statement.glossary || [])
+    .map((id) => GLOSSARY[id])
+    .filter(Boolean);
+  if (!terms.length) return "";
+  return `<details class="statement-explainer">
+    <summary>Short explainer</summary>
+    ${terms.map((term) => `<p><strong>${escapeHtml(term.term)}:</strong> ${escapeHtml(term.definition)}</p>`).join("")}
+  </details>`;
 }
 
 function statementMatches(statement) {
@@ -214,6 +225,7 @@ function renderDetails() {
           <summary><span class="sid">${statement.id}</span><span>${escapeHtml(statement.text)}</span></summary>
           <div class="audit-body">
             <p class="small muted">${escapeHtml(statement.plain)}</p>
+            ${explainerHtml(statement)}
             ${positions}
           </div>
         </details>`;
