@@ -838,7 +838,8 @@ function bindSaveRestore(results) {
   };
 
   document.getElementById("download-result-file")?.addEventListener("click", () => {
-    const payload = makeExportPayload(answers, weights, results, SECTIONS, META);
+    const currentResults = computeResults(answers, SECTIONS, PARTIES, weights);
+    const payload = makeExportPayload(answers, weights, currentResults, SECTIONS, META);
     const date = new Date().toISOString().slice(0, 10);
     downloadFile(
       `clearvote-result-${date}.json`,
